@@ -13,44 +13,25 @@ main.rb: A driver script used to test and demonstrate the functionality of the l
 🚀 Features
 
 This Linked List implementation supports the following operations:
-
-# Add to the end (Traversing)
-list.append(item)
-list.append(item)
-
-# Add to the start
-list.prepend(item)
-
-# Optimized add to end (Using Tail pointer)
-list.append_tail(item)
-
-# Print the list of nodes
-list.to_s
-
-# Get node at specific index
-list.at(number)
-
-# Check if value exists
-list.contains?(item)  
-
-# Find index of a value
-list.find_index(item)
-
-# Insert at specific index
-list.insert_at(item, number) 
-
-# Remove from specific index
-list.remove_at(number) 
-
-# Remove the last element
-list.pop
-
-🧠 Implementation Details
-Node Class
-The basic building block of the list. It holds: @value: The data stored in the node. @next_node: A link/pointer to the next node in the sequence.
-
-This implementation tracks both the @head and the @tail.
-Standard Append: The append method traverses the entire list to find the end, making it O(n).
-Optimized Append: The append_tail method utilizes the @tail pointer to add directly to the end, making it O(1).
+# list.append(item)
+Add to the end (Traversing 0(n))
+# list.prepend(item)
+Add to the start
+# list.append_tail(item)
+Optimized add to end (Using Tail pointer O(1))
+# list.to_s
+Print the list of nodes
+# list.at(number)
+Get node at specific index
+# list.contains?(item)
+Check if value exists
+# list.find_index(item)
+Find index of a value
+# list.insert_at(item, number)
+Insert at specific index
+# list.remove_at(number)
+Remove from specific index
+# list.pop
+Remove the last element
 
 This project was created as part of The Odin Project Ruby Path.
