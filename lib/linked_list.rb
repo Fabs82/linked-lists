@@ -16,6 +16,7 @@ class LinkedList
     # check if the list is empty. Add node as Head if it is
     if @head.nil?
       @head = new_node
+      @tail = @head
     else
       # if NOT empty assugn HEAD to a variable
       current_node = @head
@@ -23,7 +24,7 @@ class LinkedList
       # Rhen next_node is NIL list has been traversed completely and the loop ends
       current_node = current_node.next_node until current_node.next_node.nil?
       # Add the new node at the end of the list
-      current_node.next_node = Node.new(value)
+      current_node.next_node = new_node
       # Update the TAIL variable (DEBUG to allow append and append_tail to be used together)
       @tail = current_node.next_node
     end
@@ -31,25 +32,8 @@ class LinkedList
     @size += 1
   end
 
-  def pop
-    # The method removes the last element of the list
-    if @head.nil?
-      nil
-    elsif @head.next_node.nil?
-      @head = nil
-      @tail = nil
-      @size = 0
-    else
-      current_node = @head
-      current_node = current_node.next_node until current_node.next_node.next_node.nil?
-      current_node.next_node = nil
-      @tail = current_node
-      @size -= 1
-    end
-  end
-
   def append_tail(value)
-    # Alternative method that appends the new node directly at the end O(1)
+    # Alternative and more efficient method that appends the new node directly at the end O(1)
     new_node = Node.new(value)
     if @head.nil?
       @head = new_node
@@ -58,6 +42,26 @@ class LinkedList
     end
     @tail = new_node
     @size += 1
+  end
+
+  def pop
+    # The method removes the last element of the list
+    return nil if @head.nil?
+
+    if @size == 1
+      removed_node = @head
+      @head = nil
+      @tail = nil
+    else
+      current_node = @head
+      current_node = current_node.next_node until current_node.next_node.next_node.nil?
+      removed_node = current_node.next_node
+      current_node.next_node = nil
+      @tail = current_node
+    end
+    @size -= 1
+    puts "#{removed_node} deleted"
+    removed_node
   end
 
   def prepend(value)
@@ -72,7 +76,8 @@ class LinkedList
   end
 
   def return_tail
-    # The method return the last node of the list (the head if the list has only one element)
+    # The method return the last node of the list (the head if the list has only one element).
+    # With ATTR READER the method is redundant
     if @head.next_node.nil?
       @head
     else
@@ -83,6 +88,7 @@ class LinkedList
   end
 
   def return_head
+    # With ATTR READER the method is redundant
     # if list is not empty return the Head node
     return if @head.nil?
 
@@ -104,6 +110,7 @@ class LinkedList
         current_node = current_node.next_node
         count += 1
       end
+      puts "#{current_node.value}"
       current_node
     end
   end
@@ -131,16 +138,16 @@ class LinkedList
     # The method returns the index of the node containing the value or nil if not found
 
     # set a counter to 0
-    counter = 0
+    count = 0
     current_node = @head
     # traverse the list
     while current_node
       # check if the node.value == value and if it is return the counter and end the loop
-      return counter if current_node.value == value
+      return count if current_node.value == value
 
       # else advance in the list and increase counter
       current_node = current_node.next_node
-      counter += 1
+      count += 1
     end
     # return nil if loop ends without finding the value
     nil
@@ -150,16 +157,16 @@ class LinkedList
     # The method inserts a new node with the provided value att the given index
     return prepend(value) if index.zero?
 
-    counter = 0
+    count = 0
     current_node = @head
     while current_node
-      if counter == index - 1
+      if count == index - 1
         puts "insert - #{value} - at position #{index}"
         @size += 1
         return current_node.next_node = Node.new(value, current_node.next_node)
       end
       current_node = current_node.next_node
-      counter += 1
+      count += 1
     end
     puts "Error: Index #{index} is out of bounds for insertion."
   end
@@ -194,6 +201,6 @@ class LinkedList
       string += "( #{current_node.value} ) -> "
       current_node = current_node.next_node
     end
-    string + " nil "
+    string + "[ nil ]"
   end
 end
